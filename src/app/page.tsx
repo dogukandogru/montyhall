@@ -38,6 +38,30 @@ const translations = {
       totalGames: "Toplam Oyun",
       winRate: "Kazanma Oranı",
     },
+    explanation: {
+      title: "Monty Hall Problemi Nedir?",
+      button: "Problemi Anla",
+      close: "Kapat",
+      paragraphs: [
+        "Monty Hall problemi, olasılık teorisinde sıkça tartışılan ilginç bir paradokstur. İsmi, 'Let's Make a Deal' adlı TV şovunun sunucusu Monty Hall'dan gelmektedir.",
+        "Problemin kuralları şöyledir:",
+        "1. Önünüzde üç kapalı kapı var",
+        "2. Kapıların birinin arkasında bir araba, diğer ikisinin arkasında birer keçi var",
+        "3. Siz bir kapı seçiyorsunuz",
+        "4. Sunucu (Monty Hall), kalan kapılardan birini açıyor ve arkasında keçi olduğunu gösteriyor",
+        "5. Sunucu size seçiminizi değiştirme şansı veriyor",
+        "Neden Kapı Değiştirmek Avantajlı?",
+        "İlk seçiminizde 1/3 olasılıkla doğru kapıyı (arabayı) seçtiniz. Bu durumda kapı değiştirmek size kaybettirir. Ancak 2/3 olasılıkla yanlış kapıyı (keçiyi) seçtiniz. Sunucu diğer yanlış kapıyı açtığında, kalan kapı kesinlikle arabayı içeren kapı olacaktır.",
+        "Örnek Senaryo:",
+        "• Diyelim ki 1 numaralı kapıyı seçtiniz",
+        "• Araba 2 numaralı kapının arkasında olsun",
+        "• Sunucu 3 numaralı kapıyı açıp keçiyi gösterir",
+        "• Eğer kapınızı değiştirirseniz, 2 numaralı kapıyı seçecek ve arabayı kazanacaksınız",
+        "Bu yüzden:",
+        "• Kapıyı değiştirirseniz: 2/3 olasılıkla kazanırsınız",
+        "• İlk seçimde kalırsanız: 1/3 olasılıkla kazanırsınız",
+      ],
+    },
   },
   en: {
     title: "Monty Hall Problem",
@@ -72,6 +96,30 @@ const translations = {
       results: "Simulation Results",
       totalGames: "Total Games",
       winRate: "Win Rate",
+    },
+    explanation: {
+      title: "What is the Monty Hall Problem?",
+      button: "Understand the Problem",
+      close: "Close",
+      paragraphs: [
+        "The Monty Hall problem is a fascinating paradox in probability theory. It's named after Monty Hall, the host of the TV show 'Let's Make a Deal'.",
+        "The rules are as follows:",
+        "1. There are three closed doors in front of you",
+        "2. Behind one door is a car, behind the other two are goats",
+        "3. You choose a door",
+        "4. The host (Monty Hall) opens one of the remaining doors, showing a goat",
+        "5. The host gives you a chance to switch your choice",
+        "Why is Switching Advantageous?",
+        "When you make your initial choice, you have a 1/3 probability of choosing the car. In this case, switching would make you lose. However, you have a 2/3 probability of choosing a goat. When the host opens the other goat door, the remaining door will definitely contain the car.",
+        "Example Scenario:",
+        "• Let's say you choose door 1",
+        "• The car is behind door 2",
+        "• The host opens door 3, showing a goat",
+        "• If you switch, you'll choose door 2 and win the car",
+        "Therefore:",
+        "• If you switch: You have a 2/3 chance of winning",
+        "• If you stay: You have a 1/3 chance of winning",
+      ],
     },
   },
 };
@@ -117,6 +165,8 @@ export default function Home() {
   const [simulationDoors, setSimulationDoors] = useState<Array<"goat" | "car" | null>>([null, null, null]);
   const [simulationSelected, setSimulationSelected] = useState<number | null>(null);
   const [simulationRevealed, setSimulationRevealed] = useState<number | null>(null);
+
+  const [showExplanation, setShowExplanation] = useState(false);
 
   const initializeGame = () => {
     const newDoors: Array<"goat" | "car"> = ["goat", "goat", "goat"];
@@ -244,7 +294,13 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center space-y-8">
       {/* Dil Seçimi */}
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex space-x-2">
+        <button
+          onClick={() => setShowExplanation(true)}
+          className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+        >
+          {t.explanation.button}
+        </button>
         <button
           onClick={() => setLanguage(lang => lang === "tr" ? "en" : "tr")}
           className="px-3 py-1 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
@@ -252,6 +308,32 @@ export default function Home() {
           {language === "tr" ? "English" : "Türkçe"}
         </button>
       </div>
+
+      {/* Açıklama Modalı */}
+      {showExplanation && (
+        <div className="fixed top-16 right-4 z-50">
+          <div className="bg-white rounded-lg w-[400px] shadow-xl border border-gray-200">
+            <div className="p-4">
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-xl font-bold">{t.explanation.title}</h2>
+                <button
+                  onClick={() => setShowExplanation(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  {t.explanation.close}
+                </button>
+              </div>
+              <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-2">
+                {t.explanation.paragraphs.map((paragraph, index) => (
+                  <p key={index} className="text-sm text-gray-700">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <h1 className="text-4xl font-bold text-center">{t.title}</h1>
       
