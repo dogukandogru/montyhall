@@ -2,6 +2,8 @@
 
 Bu proje, ünlü Monty Hall problemini interaktif bir şekilde deneyimlemenizi ve simüle etmenizi sağlayan bir web uygulamasıdır.
 
+🌐 **[Canlı Demo: montyhall.dogru.dev](https://montyhall.dogru.dev)**
+
 ## 🎮 Monty Hall Problemi Nedir?
 
 Monty Hall problemi, olasılık teorisinde sıkça tartışılan ilginç bir paradokstur. Problem şu şekilde işler:
@@ -21,18 +23,20 @@ Monty Hall problemi, olasılık teorisinde sıkça tartışılan ilginç bir par
 - Otomatik simülasyon özelliği
 - Türkçe ve İngilizce dil desteği
 - Gerçek zamanlı sonuçlar
+- Mobil uyumlu tasarım
 
 ## 🔧 Teknolojiler
 
 - Next.js
 - TypeScript
 - Tailwind CSS
+- Vercel (Deployment)
 
 ## 🚀 Nasıl Çalıştırılır
 
 1. Projeyi klonlayın:
 \`\`\`bash
-git clone [repo-url]
+git clone https://github.com/dogukandogru/montyhall.git
 \`\`\`
 
 2. Bağımlılıkları yükleyin:
