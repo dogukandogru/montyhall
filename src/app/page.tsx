@@ -2,6 +2,80 @@
 
 import { useState } from "react";
 
+// Dil çevirileri
+const translations = {
+  tr: {
+    title: "Monty Hall Problemi",
+    stats: {
+      title: "Oyun İstatistikleri",
+      totalGames: "Toplam Oyun",
+      winRate: "Kazanma Oranı",
+      switchWinRate: "Değiştirince Kazanma",
+      stayWinRate: "Değiştirmeden Kazanma",
+    },
+    game: {
+      chooseDoor: "Bir Kapı Seçin",
+      canChange: "Seçiminizi Değiştirebilirsiniz",
+      gameOver: "Oyun Bitti",
+      door: "Kapı",
+      goatRevealed: ". kapıda keçi var. Seçiminizi değiştirmek ister misiniz?",
+      win: "Tebrikler! Arabayı kazandınız! 🎉",
+      lose: "Maalesef, bir keçi kazandınız! 🐐",
+      playAgain: "Tekrar Oyna",
+    },
+    simulation: {
+      title: "Simülasyon",
+      count: "Simülasyon Sayısı",
+      strategy: "Strateji",
+      strategies: {
+        random: "Rastgele",
+        switch: "Her Zaman Değiştir",
+        stay: "Asla Değiştirme",
+      },
+      running: "Simülasyon Çalışıyor...",
+      start: "Simülasyonu Başlat",
+      results: "Simülasyon Sonuçları",
+      totalGames: "Toplam Oyun",
+      winRate: "Kazanma Oranı",
+    },
+  },
+  en: {
+    title: "Monty Hall Problem",
+    stats: {
+      title: "Game Statistics",
+      totalGames: "Total Games",
+      winRate: "Win Rate",
+      switchWinRate: "Switch Win Rate",
+      stayWinRate: "Stay Win Rate",
+    },
+    game: {
+      chooseDoor: "Choose a Door",
+      canChange: "You Can Change Your Choice",
+      gameOver: "Game Over",
+      door: "Door",
+      goatRevealed: " has a goat. Would you like to change your choice?",
+      win: "Congratulations! You won the car! 🎉",
+      lose: "Sorry, you got a goat! 🐐",
+      playAgain: "Play Again",
+    },
+    simulation: {
+      title: "Simulation",
+      count: "Simulation Count",
+      strategy: "Strategy",
+      strategies: {
+        random: "Random",
+        switch: "Always Switch",
+        stay: "Never Switch",
+      },
+      running: "Simulation Running...",
+      start: "Start Simulation",
+      results: "Simulation Results",
+      totalGames: "Total Games",
+      winRate: "Win Rate",
+    },
+  },
+};
+
 interface GameStats {
   totalGames: number;
   wins: number;
@@ -17,6 +91,9 @@ interface SimulationResult {
 }
 
 export default function Home() {
+  const [language, setLanguage] = useState<"tr" | "en">("tr");
+  const t = translations[language]; // Aktif dil çevirileri
+
   const [gameState, setGameState] = useState<"initial" | "doorSelected" | "revealed" | "finished">("initial");
   const [doors, setDoors] = useState<Array<"goat" | "car" | null>>([null, null, null]);
   const [selectedDoor, setSelectedDoor] = useState<number | null>(null);
@@ -166,15 +243,25 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center space-y-8">
-      <h1 className="text-4xl font-bold text-center">Monty Hall Problemi</h1>
+      {/* Dil Seçimi */}
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={() => setLanguage(lang => lang === "tr" ? "en" : "tr")}
+          className="px-3 py-1 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
+        >
+          {language === "tr" ? "English" : "Türkçe"}
+        </button>
+      </div>
+
+      <h1 className="text-4xl font-bold text-center">{t.title}</h1>
       
       {/* İstatistikler */}
       <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-2xl">
         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-xl font-semibold">Oyun İstatistikleri</h2>
+          <h2 className="text-xl font-semibold">{t.stats.title}</h2>
           <button
             onClick={resetStats}
-            title="İstatistikleri Sıfırla"
+            title={language === "tr" ? "İstatistikleri Sıfırla" : "Reset Statistics"}
             className="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-500 transition-colors rounded-full hover:bg-gray-100"
           >
             ↺
@@ -183,19 +270,19 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center p-2 bg-gray-50 rounded">
             <div className="font-bold text-2xl text-blue-600">{stats.totalGames}</div>
-            <div className="text-sm text-gray-600">Toplam Oyun</div>
+            <div className="text-sm text-gray-600">{t.stats.totalGames}</div>
           </div>
           <div className="text-center p-2 bg-gray-50 rounded">
             <div className="font-bold text-2xl text-green-600">
               {stats.totalGames > 0 ? Math.round((stats.wins / stats.totalGames) * 100) : 0}%
             </div>
-            <div className="text-sm text-gray-600">Kazanma Oranı</div>
+            <div className="text-sm text-gray-600">{t.stats.winRate}</div>
           </div>
           <div className="text-center p-2 bg-gray-50 rounded">
             <div className="font-bold text-2xl text-purple-600">
               {stats.switchedDoor > 0 ? Math.round((stats.switchedAndWon / stats.switchedDoor) * 100) : 0}%
             </div>
-            <div className="text-sm text-gray-600">Değiştirince Kazanma</div>
+            <div className="text-sm text-gray-600">{t.stats.switchWinRate}</div>
           </div>
           <div className="text-center p-2 bg-gray-50 rounded">
             <div className="font-bold text-2xl text-orange-600">
@@ -203,7 +290,7 @@ export default function Home() {
                 ? Math.round((stats.stayedAndWon / (stats.totalGames - stats.switchedDoor)) * 100) 
                 : 0}%
             </div>
-            <div className="text-sm text-gray-600">Değiştirmeden Kazanma</div>
+            <div className="text-sm text-gray-600">{t.stats.stayWinRate}</div>
           </div>
         </div>
       </div>
@@ -212,10 +299,10 @@ export default function Home() {
       <div className="flex flex-col items-center space-y-4">
         <h2 className="text-2xl font-semibold text-gray-700">
           {gameState === "initial" 
-            ? "Bir Kapı Seçin" 
+            ? t.game.chooseDoor
             : gameState === "doorSelected" 
-              ? "Seçiminizi Değiştirebilirsiniz"
-              : "Oyun Bitti"}
+              ? t.game.canChange
+              : t.game.gameOver}
         </h2>
         <div className="flex justify-center space-x-4">
           {(isSimulating ? simulationDoors : doors).map((door, index) => (
@@ -236,7 +323,7 @@ export default function Home() {
                 {(isSimulating && (simulationRevealed === index || simulationSelected === index)) || 
                  (!isSimulating && (gameState === "finished" || revealedDoor === index))
                   ? (isSimulating ? simulationDoors : doors)[index] === "car" ? "🚗" : "🐐"
-                  : `Kapı ${index + 1}`}
+                  : `${t.game.door} ${index + 1}`}
               </div>
             </button>
           ))}
@@ -246,20 +333,20 @@ export default function Home() {
       <div className="text-center space-y-4">
         {gameState === "doorSelected" && (
           <p className="text-lg">
-            {revealedDoor !== null && `${revealedDoor + 1}. kapıda keçi var. Seçiminizi değiştirmek ister misiniz?`}
+            {revealedDoor !== null && `${t.game.door} ${revealedDoor + 1}${t.game.goatRevealed}`}
           </p>
         )}
         
         {gameState === "finished" && (
           <div>
             <p className="text-xl font-bold mb-4">
-              {result === "win" ? "Tebrikler! Arabayı kazandınız! 🎉" : "Maalesef, bir keçi kazandınız! 🐐"}
+              {result === "win" ? t.game.win : t.game.lose}
             </p>
             <button
               onClick={initializeGame}
               className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
             >
-              Tekrar Oyna
+              {t.game.playAgain}
             </button>
           </div>
         )}
@@ -267,12 +354,12 @@ export default function Home() {
 
       {/* Simülasyon Bölümü */}
       <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-2xl">
-        <h2 className="text-xl font-semibold mb-4">Simülasyon</h2>
+        <h2 className="text-xl font-semibold mb-4">{t.simulation.title}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Simülasyon Sayısı
+              {t.simulation.count}
             </label>
             <input
               type="number"
@@ -287,7 +374,7 @@ export default function Home() {
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Strateji
+              {t.simulation.strategy}
             </label>
             <select
               value={simulationStrategy}
@@ -295,9 +382,9 @@ export default function Home() {
               className="w-full px-3 py-2 border rounded-md"
               disabled={isSimulating}
             >
-              <option value="random">Rastgele</option>
-              <option value="switch">Her Zaman Değiştir</option>
-              <option value="stay">Asla Değiştirme</option>
+              <option value="random">{t.simulation.strategies.random}</option>
+              <option value="switch">{t.simulation.strategies.switch}</option>
+              <option value="stay">{t.simulation.strategies.stay}</option>
             </select>
           </div>
         </div>
@@ -311,19 +398,19 @@ export default function Home() {
               : "bg-green-500 hover:bg-green-600"
           }`}
         >
-          {isSimulating ? "Simülasyon Çalışıyor..." : "Simülasyonu Başlat"}
+          {isSimulating ? t.simulation.running : t.simulation.start}
         </button>
 
         {simulationResult && (
           <div className="mt-4 p-4 bg-gray-50 rounded-md">
-            <h3 className="font-semibold mb-2">Simülasyon Sonuçları</h3>
+            <h3 className="font-semibold mb-2">{t.simulation.results}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <div className="text-sm text-gray-600">Toplam Oyun</div>
+                <div className="text-sm text-gray-600">{t.simulation.totalGames}</div>
                 <div className="font-bold text-xl">{simulationResult.gamesPlayed}</div>
               </div>
               <div>
-                <div className="text-sm text-gray-600">Kazanma Oranı</div>
+                <div className="text-sm text-gray-600">{t.simulation.winRate}</div>
                 <div className="font-bold text-xl text-green-600">
                   {Math.round((simulationResult.wins / simulationResult.gamesPlayed) * 100)}%
                 </div>

@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚗 Monty Hall Problemi Simülasyonu
 
-## Getting Started
+Bu proje, ünlü Monty Hall problemini interaktif bir şekilde deneyimlemenizi ve simüle etmenizi sağlayan bir web uygulamasıdır.
 
-First, run the development server:
+## 🎮 Monty Hall Problemi Nedir?
 
-```bash
+Monty Hall problemi, olasılık teorisinde sıkça tartışılan ilginç bir paradokstur. Problem şu şekilde işler:
+
+1. Önünüzde üç kapalı kapı var
+2. Kapıların birinin arkasında bir araba, diğer ikisinin arkasında birer keçi var
+3. Siz bir kapı seçiyorsunuz
+4. Sunucu (Monty Hall), kalan kapılardan birini açıyor ve arkasında keçi olduğunu gösteriyor
+5. Sunucu size seçiminizi değiştirme şansı veriyor
+
+İlginç olan şu ki, seçiminizi değiştirirseniz kazanma olasılığınız 2/3'e yükseliyor! İlk seçiminizde kalırsanız kazanma olasılığınız 1/3'te kalıyor.
+
+## 🌟 Özellikler
+
+- İnteraktif oyun deneyimi
+- Detaylı istatistikler
+- Otomatik simülasyon özelliği
+- Türkçe ve İngilizce dil desteği
+- Gerçek zamanlı sonuçlar
+
+## 🔧 Teknolojiler
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+
+## 🚀 Nasıl Çalıştırılır
+
+1. Projeyi klonlayın:
+\`\`\`bash
+git clone [repo-url]
+\`\`\`
+
+2. Bağımlılıkları yükleyin:
+\`\`\`bash
+npm install
+\`\`\`
+
+3. Geliştirme sunucusunu başlatın:
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Tarayıcınızda http://localhost:3000 adresini açın
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📊 Neden Kapı Değiştirmek Daha Avantajlı?
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+İlk seçiminizde 1/3 olasılıkla doğru kapıyı seçtiniz. Bu durumda kapı değiştirmek size kaybettirir.
+Ancak 2/3 olasılıkla yanlış kapıyı seçtiniz. Sunucu diğer yanlış kapıyı açtığında, kalan kapı kesinlikle arabayı içeren kapı olacaktır.
 
-## Learn More
+Bu yüzden:
+- Kapıyı değiştirirseniz: 2/3 olasılıkla kazanırsınız
+- İlk seçimde kalırsanız: 1/3 olasılıkla kazanırsınız
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Simülasyon bölümünü kullanarak bu istatistikleri kendiniz de test edebilirsiniz!
